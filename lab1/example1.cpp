@@ -1,3 +1,4 @@
+//lex for pl0, don't seem to work if there is comments such as '//...'
 #include <stdio.h>
 #include <string.h>
 #define norw 13         /*关键字个数*/
@@ -45,7 +46,7 @@ void error(int n)
 }
 int getch()
 {
-    if(cc == ll)
+    if(cc == ll) //如果line中的字符都读完了，则再读一行存入line
     {
         if(feof(fin))
         {
@@ -70,7 +71,7 @@ int getch()
         }
         printf("\n");
     }
-    ch = line[cc];
+    ch = line[cc]; //这里体现getch，即读回了一个字符存入ch
     cc++;
     return 0;
 }
@@ -93,7 +94,7 @@ int getsym()
                 k++;
             }
             getchdo;
-        }while(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9');
+        }while(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9'); //一个标志符或保留字
         a[k] = '\0';
         strcpy(id, a);
         i = 0;
@@ -105,7 +106,7 @@ int getsym()
                 j = k-1;
             if(strcmp(id, word[k]) >= 0)
                 i = k+1;
-        }while(i <= j);
+        }while(i <= j); //二分法查找是否属于保留字（如果找到了则两个if似乎都很执行，则i = j + 2）
  
         if(i-1 > j)
         {
@@ -135,8 +136,8 @@ int getsym()
                 error(30);
             }
             printf("整  数 (2,'%d')\n",num);
-        }
-        else
+        } //获取一个整数
+        else //判断是哪个运算符
         {
             if(ch == ':')
             {

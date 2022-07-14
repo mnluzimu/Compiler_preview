@@ -23,4 +23,4 @@ r:=1;
 call gcd;
 write(m);
 end;
-end
+end.
